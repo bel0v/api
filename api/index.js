@@ -24,13 +24,14 @@ function getPostImage(post) {
 }
 
 app.get('/tumblr', (req, res) => {
-  res.setHeader('Content-Type', 'image/jpeg')
   res.setHeader('Cache-Control', 's-max-age=60, stale-while-revalidate')
+  res.setHeader('Content-Type', 'application/json')
   getTumblrPhotoPosts('rekall')
     .then((posts) => {
       const images = posts.map(getPostImage)
       const randomImage = _sample(images)
       // res.json(randomImage)
+      res.setHeader('Content-Type', 'image/jpeg')
       res.sendFile(randomImage)
     })
     .catch((err) => res.status(500).json({ error: err }))
