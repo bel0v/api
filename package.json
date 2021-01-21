@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bel0v/api.git"
@@ -17,6 +15,10 @@
   },
   "homepage": "https://github.com/bel0v/api#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "tumblr.js": "^3.0.0"
+  },
+  "devDependencies": {
+    "prettier": "2.2.1"
   }
 }
