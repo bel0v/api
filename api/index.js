@@ -24,7 +24,7 @@ function getPostImage(post) {
 }
 
 app.get('/tumblr', (req, res) => {
-  res.setHeader('Content-Type', 'image')
+  res.setHeader('Content-Type', 'image/jpeg')
   res.setHeader('Cache-Control', 's-max-age=60, stale-while-revalidate')
   getTumblrPhotoPosts('rekall')
     .then((posts) => {
