@@ -16,16 +16,16 @@ function getTumblrPhotoPosts(blogName) {
   })
 }
 
-app.get('/tumblr', (req, res) => {
+app.get('/tumblr', async (req, res) => {
   res.setHeader('Content-Type', 'application/json')
   res.setHeader('Cache-Control', 's-max-age=60, stale-while-revalidate')
-  getTumblrPhotoPosts('rekall')
-    .then((posts) => res.end(posts))
-    .catch((err) => res.err(err))
+  const posts = await getTumblrPhotoPosts('rekall')
+    .then((posts) => res.json(posts))
+    .catch((err) => res.status(500).json({ error: err }))
 })
 
 app.get('*', function (req, res) {
-  res.send('🚫', 404)
+  res.status(400).send('🚫')
 })
 
 module.exports = app
