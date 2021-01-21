@@ -16,6 +16,7 @@
   "homepage": "https://github.com/bel0v/api#readme",
   "dependencies": {
     "express": "^4.17.1",
+    "lodash.sample": "^4.2.1",
     "tumblr.js": "^3.0.0"
   },
   "devDependencies": {
