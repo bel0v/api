@@ -16,10 +16,10 @@ function getTumblrPhotoPosts(blogName) {
   })
 }
 
-app.get('/tumblr', async (req, res) => {
+app.get('/tumblr', (req, res) => {
   res.setHeader('Content-Type', 'application/json')
   res.setHeader('Cache-Control', 's-max-age=60, stale-while-revalidate')
-  const posts = await getTumblrPhotoPosts('rekall')
+  getTumblrPhotoPosts('rekall')
     .then((posts) => res.json(posts))
     .catch((err) => res.status(500).json({ error: err }))
 })
