@@ -1,6 +1,8 @@
 const app = require('express')()
+require('dotenv').config()
 const tumblr = require('tumblr.js')
 const _sample = require('lodash.sample')
+const got = require('got')
 const tumbrlClient = tumblr.createClient({
   consumer_key: process.env.TUMBLR_API_KEY,
 })
@@ -23,25 +25,27 @@ function getPostImage(post) {
   return post.photos ? post.photos[0].original_size.url : undefined
 }
 
-app.get('/tumblr', (req, res) => {
+app.get('/tumblr/random-photo/:blogId', (req, res) => {
+  const blogId = req.params.blogId
+
   res.setHeader('Cache-Control', 's-max-age=60, stale-while-revalidate')
   res.setHeader('Content-Type', 'application/json')
-  getTumblrPhotoPosts('rekall')
+
+  getTumblrPhotoPosts(blogId)
     .then((posts) => {
       const images = posts.map(getPostImage)
       const randomImage = _sample(images)
-      console.log(randomImage)
-      res.sendFile(randomImage, {
-        immutable: true,
-        maxAge: 10000,
-        headers: { 'Content-Type': 'image/jpeg' },
-      })
+      got.stream(randomImage).pipe(res)
     })
-    .catch((err) => res.status(500).json({ error: err }))
+    .catch((err) => {
+      res.status(500).send('Something went wrong')
+    })
 })
 
 app.get('*', function (req, res) {
   res.status(400).send('🚫')
 })
+
+app.listen(80)
 
 module.exports = app
