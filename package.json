@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "got": "^11.8.1",
     "lodash.sample": "^4.2.1",
+    "node-cache": "^5.1.2",
     "tumblr.js": "^3.0.0"
   },
   "devDependencies": {
