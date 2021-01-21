@@ -30,9 +30,12 @@ app.get('/tumblr', (req, res) => {
     .then((posts) => {
       const images = posts.map(getPostImage)
       const randomImage = _sample(images)
-      // res.json(randomImage)
-      res.setHeader('Content-Type', 'image/jpeg')
-      res.sendFile(randomImage)
+      console.log(randomImage)
+      res.sendFile(randomImage, {
+        immutable: true,
+        maxAge: 10000,
+        headers: { 'Content-Type': 'image/jpeg' },
+      })
     })
     .catch((err) => res.status(500).json({ error: err }))
 })
